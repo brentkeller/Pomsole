@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Pomsole.Core.Config;
 
 namespace Pomsole.Core
 {
@@ -6,6 +7,7 @@ namespace Pomsole.Core
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<ConfigManager>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<SessionManager>().As<ISessionManager>();
         }
 

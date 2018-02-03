@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using Pomsole.Core.Audio;
+using Pomsole.Core.Config;
 
 namespace Pomsole
 {
@@ -12,9 +9,12 @@ namespace Pomsole
     {
         protected SoundPlayer player;
 
-        public AudioPlayer()
+        protected readonly ConfigManager ConfigManager;
+
+        public AudioPlayer(ConfigManager configManager)
         {
-            player = new SoundPlayer(@"C:\Files\sounds\ShipBell.wav");
+            ConfigManager = configManager;
+            player = new SoundPlayer(ConfigManager.Config.AlertFilePath);
         }
 
         public void PlayAudio()

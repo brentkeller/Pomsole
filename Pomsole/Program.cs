@@ -49,8 +49,12 @@ namespace Pomsole
             ConfigManager.Init(Path.Combine(Environment.CurrentDirectory, "Pomsole.config.json"));
             if (ConfigManager.Config.IsEmpty())
             {
-                ConfigManager.Config.AlertFilePath = @"C:\files\sounds\ShipBell.wav";
-                // TODO: Ask for config values
+                Console.WriteLine("Let's get some info to get started.");
+                Console.WriteLine(@"Timer alarm sound file path (e.g. C:\sounds\bell.wav)");
+                ConfigManager.Config.AlertFilePath = Console.ReadLine();
+                Console.WriteLine(@"Data file path (e.g. C:\data\pomsole.csv)");
+                ConfigManager.Config.DataFilePath = Console.ReadLine();
+                Console.WriteLine(@"Got it! Let's get to work!");
                 ConfigManager.Save();
             }
         }

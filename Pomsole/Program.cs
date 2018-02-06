@@ -6,6 +6,7 @@ using Fclp;
 using Pomsole.Core;
 using Pomsole.Core.Audio;
 using Pomsole.Core.Config;
+using Pomsole.Core.Data;
 using Pomsole.Core.Models;
 
 namespace Pomsole
@@ -13,6 +14,7 @@ namespace Pomsole
     class Program
     {
         static IAudioPlayer AudioPlayer;
+        static IDataManager DataManager;
         static ISessionManager SessionManager;
         static ConfigManager ConfigManager;
         static Timer SessionTimer;
@@ -28,6 +30,7 @@ namespace Pomsole
             if (!parsedArgs.HasErrors)
             {
                 SessionConfig = parser.Object;
+                DataManager = container.Resolve<IDataManager>();
                 AudioPlayer = container.Resolve<IAudioPlayer>();
                 SessionManager = container.Resolve<ISessionManager>();
                 SessionManager.BeginSession(SessionConfig);
@@ -70,11 +73,12 @@ namespace Pomsole
                 AudioPlayer.PlayAudio();
             if (status.State == SessionState.Completed)
             {
+                SessionTimer.Enabled = false;
                 Console.WriteLine($"Session completed!");
                 Console.WriteLine($"Length: {status.Session.SessionLength}");
                 if (!string.IsNullOrWhiteSpace(status.Session.Task))
                     Console.WriteLine($"Task: {status.Session.Task}");
-                // TODO: Persist completed session
+                DataManager.Write(status.Session, ConfigManager.Config.DataFilePath);
                 Environment.Exit(0);
             }
             else

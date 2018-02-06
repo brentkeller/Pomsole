@@ -54,6 +54,8 @@
     <Compile Include="Config\AppConfig.cs" />
     <Compile Include="Config\ConfigManager.cs" />
     <Compile Include="CoreModule.cs" />
+    <Compile Include="Data\DataManager.cs" />
+    <Compile Include="IO\FileManager.cs" />
     <Compile Include="Models\SessionConfig.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\SessionStatus.cs" />

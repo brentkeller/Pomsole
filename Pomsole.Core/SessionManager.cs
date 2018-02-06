@@ -24,7 +24,7 @@ namespace Pomsole.Core
                 Category = config.Category,
                 Task = config.Task,
                 SessionStart = SystemTime.Now,
-                SessionEnd = SystemTime.Now.AddMinutes(config.SessionLength)
+                SessionEnd = SystemTime.Now.AddSeconds(config.SessionLength)
             };
             CurrentState = SessionState.Session;
         }
@@ -52,7 +52,7 @@ namespace Pomsole.Core
                 if (Session.BreakStart == null)
                 {
                     Session.BreakStart = SystemTime.Now;
-                    Session.BreakEnd = SystemTime.Now.AddMinutes(Session.BreakLength);
+                    Session.BreakEnd = SystemTime.Now.AddSeconds(Session.BreakLength);
                     SetState(SessionState.Break);
                 }
                 else if (now > Session.BreakEnd)

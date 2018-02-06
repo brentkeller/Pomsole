@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Newtonsoft.Json;
+using Pomsole.Core.IO;
 
 namespace Pomsole.Core.Config
 {
@@ -7,6 +7,13 @@ namespace Pomsole.Core.Config
     {
         protected string FilePath;
         public AppConfig Config;
+
+        private readonly IFileManager FileManager;
+
+        public ConfigManager(IFileManager fileManager)
+        {
+            FileManager = fileManager;
+        }
 
         public void Init(string filePath)
         {
@@ -16,20 +23,14 @@ namespace Pomsole.Core.Config
 
         public void Save()
         {
-            var serializer = new JsonSerializer();
-            using (StreamWriter file = File.CreateText(FilePath))
-                using(JsonTextWriter writer = new JsonTextWriter(file))
-                   serializer.Serialize(writer, Config);
+            FileManager.Write(Config, FilePath);
         }
 
         protected AppConfig Load()
         {
             if (!File.Exists(FilePath))
                 return new AppConfig();
-            var serializer = new JsonSerializer();
-            using (var reader = new StreamReader(FilePath))
-                using (var jsonReader = new JsonTextReader(reader))
-                    return serializer.Deserialize<AppConfig>(jsonReader);
+            return FileManager.Read<AppConfig>(FilePath);
         }
     }
 }

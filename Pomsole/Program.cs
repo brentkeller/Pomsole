@@ -74,6 +74,7 @@ namespace Pomsole
             if (status.State == SessionState.Completed)
             {
                 SessionTimer.Enabled = false;
+                Console.WriteLine($"Current time: {DateTime.Now.ToString("h:mm tt")}");
                 Console.WriteLine($"Session completed!");
                 Console.WriteLine($"Length: {status.Session.SessionLength}");
                 if (!string.IsNullOrWhiteSpace(status.Session.Task))
